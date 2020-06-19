@@ -12,6 +12,7 @@ class Solution():
                     if s == target:
                         results.append(result + [nums[l], nums[r]])
                         l += 1
+                        # if the later one are just the same as the previous one, keep moving and search, and back to while loop to try to add new results
                         while l < r and nums[l] == nums[l-1]:
                             l += 1
                     elif s < target:
@@ -20,6 +21,7 @@ class Solution():
                         r -= 1
             else: # recursively reduce N, what is the logic between this else and 
                 for i in range(l, r+1): # include l to r
+                    # this process try to add different set of first two numbers
                     if i == l or (i > l and nums[i-1] != nums[i]):
                         findNsum(i+1, r, target-nums[i], N-1, result+[nums[i]], results)
 
