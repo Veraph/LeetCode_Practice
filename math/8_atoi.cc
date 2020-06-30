@@ -4,12 +4,15 @@
 #include <cctype>
 using std::string;
 
-int main(string str)
+int main()
 {
+    string str("42");
     long result = 0;
     int indicator = 1;
 
     int n = str.find_first_not_of(' ');
+    if (isalpha(str[n]))
+        return 0;
     if (str[n] == '-') {
         indicator =  -1;
         ++n;
@@ -17,15 +20,17 @@ int main(string str)
         indicator = 1;
         ++n;
     }
-        
-    while (isdigit(str[n])) {
-        result = result * 10 + str[n];
-        ++n;
-        if (result*indicator >= INT32_MAX)
-            return INT32_MAX;
-        if (result*indicator <= INT32_MIN)
-            return INT32_MIN;
-    }
 
-    return result * indicator;
+    for (n; n != str.size(); ++n) {
+        if (isdigit(str[n])) {
+            result = result * 10 + str[n];
+            if (result*indicator >= INT32_MAX)
+                return INT32_MAX;
+            if (result*indicator <= INT32_MIN)
+                return INT32_MIN;
+        } else {
+            std::cout << result * indicator;
+            return result * indicator;
+        }
+    }    
 }
