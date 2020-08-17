@@ -33,8 +33,8 @@ def findLongestWord(s,d):
     take care of the change of index.
     '''
     d.sort(key=lambda x: (-len(x),x)) # sort with the length first and then with the alphabatic order
-    for i in d:
-        len_s = len(s)-1
+    for i in d:                       # use the tuple, sort first the first element--len, then if have same
+        len_s = len(s)-1              # length, use the second element to sort.
         len_i = len(i)-1
         while len_s >= len_i:
             if len_i < 0:
