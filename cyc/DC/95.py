@@ -30,6 +30,10 @@ Constraints:
 0 <= n <= 8
 '''
 class TreeNode:
+    '''
+    like the 241
+    use recursive to calc DC
+    '''
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
