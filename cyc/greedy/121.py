@@ -1,4 +1,4 @@
-# 121.py -- Best Time to Buy and Sell Stock
+# 121.py -- Best Time to Buy and Sell Stock I
 
 '''
 Description:
@@ -25,11 +25,11 @@ def maxProfit(prices):
     and calculate the diff so far to pick the maximum one.
     remember the right hand side value in range() is not included.
     '''
-    sale_index = 0
+    buy_index = 0
     max_profit = 0
     for i in range(1,len(prices)):
-        if prices[i] < prices[sale_index]:
-            sale_index = i
+        if prices[i] < prices[buy_index]:
+            buy_index = i
         else:
-            max_profit = max(max_profit, prices[i]-prices[sale_index])
+            max_profit = max(max_profit, prices[i]-prices[buy_index])
     return max_profit
