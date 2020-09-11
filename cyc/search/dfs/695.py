@@ -25,6 +25,10 @@ Note: The length of each dimension in the given grid does not exceed 50.
 '''
 
 def maxAreaOfIsland(grid):
+
+    if not grid:
+        return 0
+
     m, n = len(grid), len(grid[0]) # record the long and width
     
     def dfs(i,j):
@@ -35,5 +39,6 @@ def maxAreaOfIsland(grid):
     max_island = 0
     for i in range(m):
         for j in range(n):
-            max_island = max(max_island, dfs(i,j))
+            if grid[i][j]:
+                max_island = max(max_island, dfs(i,j))
     return max_island
