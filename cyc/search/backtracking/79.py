@@ -33,7 +33,7 @@ def exist(board, word):
         board[i][j], origin = 0, board[i][j]
         for x, y in [(i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)]:
             if 0 <= x < m and 0 <= y < n and board[x][y] == word[0]:
-                if dfs(x, y, word[1:]): return True
+                if dfs(x, y, word[1:]): return True # will continues to return True if this is the word we want.
         board[i][j] = origin
         return False
 
