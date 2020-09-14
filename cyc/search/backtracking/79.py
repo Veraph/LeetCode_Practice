@@ -34,7 +34,7 @@ def exist(board, word):
         for x, y in [(i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)]:
             if 0 <= x < m and 0 <= y < n and board[x][y] == word[0]:
                 if dfs(x, y, word[1:]): return True # will continues to return True if this is the word we want.
-        board[i][j] = origin
+        board[i][j] = origin # if not right, return to the original matrix
         return False
 
     for i in range(m):
@@ -43,4 +43,4 @@ def exist(board, word):
                 if dfs(i,j,word[1:]):
                     return True
     return False
-
+exist([["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]],"ABCCED")
