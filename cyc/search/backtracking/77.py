@@ -25,8 +25,7 @@ Output: [[1]]
 def combine(n,k):
     '''
     so slow.
-    but right one.
-    '''
+    but right one using backtracking
     '''
     res = []
     nums = list(range(1,n+1))
@@ -42,7 +41,7 @@ def combine(n,k):
     dfs(nums, [], res)
 
     return res
-    '''
+
     '''
     super fast trick.
     '''
