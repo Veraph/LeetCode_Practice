@@ -46,6 +46,26 @@ def canPartition(nums):
     return dp[-1][-1]
 
     '''
+    Try to optimize Space for DP.
+    '''
+    if not nums:
+        return False
+    s = sum(nums)
+    if s % 2 != 0:
+        return False
+    target = int(s/2)
+
+    dp = [False for i in range(target+1)]
+    dp[0] = True
+
+    for num in nums:
+        for i in range(target, 0, -1): # need to loop from end to the start or failed.
+            if i >= num:
+                dp[i] = dp[i] or dp[i-num]
+    return dp[-1]
+
+
+    '''
     DFS,
     Much Much faster,
     sort the nums with reverse order more faster.
