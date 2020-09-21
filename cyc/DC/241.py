@@ -28,6 +28,8 @@ def diffWaysToCompute(input):
     '''
     use the thinking of divide and conquer.
     divide the parent problem into sub problems and solve.
+    DO NOT DIVE INTO TOO MUCH ABOUT THE DETAIL OF THE RECURSIVE,
+    FOCUS ON THE THINKING.
     '''
     if input.isdigit():
         return [int(input)]
