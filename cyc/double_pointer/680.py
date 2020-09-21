@@ -25,7 +25,7 @@ def valid_palind(s):
     while l < r:
         if s[l] != s[r]:
             one, two = s[left:right], s[left+1:right+1]
-            return one == one[::-1] or two == two[::-1]
+            return one == one[::-1] or two == two[::-1] # the method to judge palindrome is [::-1]
         l += 1
         r -= 1
     return True
