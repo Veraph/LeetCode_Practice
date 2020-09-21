@@ -39,6 +39,7 @@ def minPathSum(grid):
     faster.
     remember the thinking,
     draw a grid.
+    calculate the boarder first(left-top).
     '''
     m, n = len(grid), len(grid[0])
 

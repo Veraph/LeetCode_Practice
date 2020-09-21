@@ -18,6 +18,8 @@ class Solution:
         pb = headB
 
         while pa != pb:
+            # go through a first and then b,
+            # the total lengths are the same
             pa = headB if not pa else pa.next
             pb = headA if not pb else pb.next
 

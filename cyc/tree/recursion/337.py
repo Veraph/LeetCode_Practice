@@ -44,7 +44,8 @@ class TreeNode:
 class Solution:
     def rob(self, root):
         '''
-        modify the original structure to speed up
+        modify the original structure to speed up.
+        compare the val between skip this point or not skip.
         '''
         if not root:
             return 0

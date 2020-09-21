@@ -32,7 +32,7 @@ def numDecodings(s):
     
     for i in range(2, len(s)+1):
         # be careful about the dealing process, we do not need to fix all in a single 
-        # if condition, we can do with more ifs to calculate result clear and simple.
+        # if condition, we can do with more ifs to calculate result more clear and simpler.
         if 0 < int(s[i-1:i]):
             dp[i] += dp[i-1]
         if 10 <= int(s[i-2:i]) <= 26:
