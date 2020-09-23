@@ -35,6 +35,25 @@ class Solution:
             return
         self.dfs(nums, target-nums[index], index+1)
         self.dfs(nums, target+nums[index], index+1)
+    
+    '''DFS + Memorization avoid duplicates, works'''
+    def findTargetSumWays(self, nums, S):
+        self.memo = {}
+        return self.dfs(nums, S, 0, 0)
+
+    def dfs(self, nums, target, index, curr_sum):
+        if (index, curr_sum) in self.memo:
+            return self.memo[(index, curr_sum)]
+
+        if index >= len(nums):
+            if target == curr_sum:
+                return 1
+            return 0
+
+        positive = self.dfs(nums, target, index+1, curr_sum+nums[index])
+        negative = self.dfs(nums, target, index+1, curr_sum-nums[index])
+        self.memo[(index,curr_sum)] = positive+negative
+        return self.memo[(index, curr_sum)]
 
 
     '''DP, wait for further thinking'''
