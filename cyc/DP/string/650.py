@@ -29,11 +29,11 @@ class Solution:
         # edge case 
         if n == 1:
             return 0
-        def dfs(i, n, l):
+        def dfs(i, n, l): # i and l means we currently have and the copied number last time
             # edge case
             if i > n:
                 return float('inf')
-            elif have == n:
+            elif i == n:
                 return 0
             else:
                 copy = 2 + dfs(i+i, n, i)
@@ -41,6 +41,44 @@ class Solution:
                 return min(copy, paste)
         return 1 + dfs(1, n, 1) # the 1 added is for the start operation
 
-Solution().minSteps1(3)
+
     # 2. try the recursion with memory
+    # much faster
+    def minSteps2(self, n):
+        if n == 1:
+            return 0
+        def memo_dfs(i, n, l, memo):
+            if i > n:
+                return float('inf')
+            elif i == n:
+                return 0
+
+            if (i,l) not in memo:
+                copy = 2 + memo_dfs(i+i, n, i, memo)
+                paste = 1 + memo_dfs(i+l, n, l, memo)
+                memo[(i,j)] = min(copy, paste) # remember to record the val of memo
+            return memo[(i,j)]
+        memo = {}
+        return 1 + memo_dfs(1, n, 1, memo)
+
+    # 3. Try the DP
+    # find how the dp is formed is important
+    def minStep3(self, n):
+        # edge case
+        if n == 1:
+            return 0
+        # create and initialize dp
+        dp = [i for i in range(n+1)]
+
+        # fill the dp
+        for i in range(2, n+1):
+            for j in range(i//2, 2, -1): # be careful about the range
+                if i % j == 0:
+                    dp[i] = dp[j] + (i//j)
+                    break # terminate in advance to optimize 
         
+        return dp[-1]
+
+
+        
+    
