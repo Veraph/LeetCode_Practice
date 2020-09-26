@@ -2,16 +2,17 @@
 
 '''
 start: 11:15
-finished: 
+finished: failed
 '''
 
 # what a mass
 # start from easy case
+# just pure math
 T = int(input())
 for t in range(T):
     a = [int(s) for s in input().split(' ')]
     N, A, B, C = a[0], a[1], a[2], a[3]
-    print('Case #{}'.format(t+1), end='')
+    print('Case #{}:'.format(t+1), end=' ')
     if A + B - C > N or (A + B - C == 1 and N >= 2):
         print('IMPOSSIBLE')
     else:
@@ -41,6 +42,6 @@ for t in range(T):
                     ans.insert(1, 1)
 
             for i in range(N):
-                print(i, end = ' ')
+                print(ans[i], end = ' ')
             print()
         
