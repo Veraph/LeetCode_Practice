@@ -20,7 +20,6 @@ class Solution:
                 res.append(node.val)
                 dfs(node.right)
                 dfs(node.left)
-
         dfs(root)
         return res[::-1]
 

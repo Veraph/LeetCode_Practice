@@ -45,7 +45,6 @@ class Solution:
         while stack:
             node = stack.pop()
             if node:
-                node = stack.pop()
                 stack.append(node.right)
                 stack.append(node.left)
                 res.append(node.val)

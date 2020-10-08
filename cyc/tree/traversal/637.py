@@ -57,7 +57,7 @@ class Solution:
                 if node.right:
                     next_level.append(node.right)
             
-            res.append(level_val/len(current_level))
+            res.append(level_val / len(current_level))
             current_level = next_level
             
         return res
