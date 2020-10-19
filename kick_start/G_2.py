@@ -1,3 +1,6 @@
+'''
+AC
+'''
 T = int(input())
 
 for t in range(T):
@@ -26,5 +29,24 @@ for t in range(T):
         j = 0
     
     print('Case #{}: {}'.format(t + 1, max(res)))
-    
 
+'''
+LXZ's
+'''
+T = int(input())
+
+for t in range(T):
+    dic = {}
+    n = int(input())
+    board = [list(map(int, input().split())) for i in range(n)] # remember the simpler way to construct the matrix
+    res = 0
+    # instead of two duplicated loop, LXZ uses a single double loop
+    for i in range(n):
+        for j in range(n):
+            # oh my god, LXZ, forever GOD
+            # v will be the same if the index of the martix in the same diagnal line
+            v = i - j
+            dic[v] = dic.get(v, 0) + board[i][j]
+            if dic[v] > res:
+                res = dic[v]
+    print('Case #{}: {}'.format(t + 1, res))
