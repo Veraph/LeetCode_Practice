@@ -1,31 +1,22 @@
-t = int(input())
-while t:
-    a, b = map(int, input().split())
-    maps = input()
-    begin_idx = end_idx = mine_cnt = 0
-    for i in range(len(maps)):
-        if maps[i] == '1':
-            mine_cnt = 1
-            begin_idx = i
-            for j in range(begin_idx, len(maps)):
-                if maps[j] == '1':
-                    mine_cnt += 1
-                    end_idx = j
-            break
-        break
 
-    mine_len = end_idx - begin_idx + 1
-    zero_cnt = mine_len - mine_cnt
+# sometimes the while in python have problems!
 
-    if zero_cnt == 0:
-        ans = a
-    else:
-        if a > b:
-            ans = zero_cnt * b + a
+for _ in range(int(input())):
+    a, b = [int(i) for i in input().split()]
+    s = input().lstrip('0').rstrip('0')
+    if len(s) == 0:
+        print(0)
+        continue
+    len_0 = 0
+    ans = a
+    for i in s:
+        if i == '0':
+            len_0 += 1
         else:
-            # need to calculate the blocks number instead
-            ans = mine_cnt * a
-    
+            if len_0 * b <= a:
+                ans += len_0*b
+            else:
+                ans += a
+            len_0 = 0
+
     print(ans)
-    t -= 1
-        

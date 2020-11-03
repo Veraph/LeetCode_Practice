@@ -1,45 +1,42 @@
 # include <iostream>
 # include <string>
-using namespace std;
+# include <algorithm>
+# define ll long long
+using std::cin, std::string, std::min, std::endl, std::cout;
 
 int main() {
     int t;
     cin >> t;
     while (t--) {
-        int a, b;
+        ll a, b;
         cin >> a >> b;
         string maps;
         cin >> maps;
-
-        long long mine_len, mine_cnt, zero_cnt, begin_idx, end_idx;
-        for (int i = 0; i < maps.length(); ++i) {
-            if (maps[i] == '1') {
-                mine_cnt = 1;
-                begin_idx = i;
-                for (int j = begin_idx; j < maps.length(); ++j) {
-                    if (maps[j] == '1') {
-                        mine_cnt ++;
-                        end_idx = j;
-                    }
-                }
+        
+        ll ans = a, i;
+        // find the first 1
+        for (i = 0; i < maps.size(); ++i) {
+            if (maps[i] == '1')
                 break;
-            }
-            break;
         }
-        mine_len = end_idx - begin_idx + 1;
-        zero_cnt = mine_len - mine_cnt;
-        long long ans;
+        
+        ll len_0 = 0;
+        if (i == maps.size()){
+            cout << 0 << endl;
+            continue;
+        }
 
-        if (zero_cnt == 0) {
-            ans = a;
-        } else {
-            if (a > b) {
-                ans = zero_cnt * b + a;
-            } else {
-                ans = (zero_cnt + 1) * a;
+        // every time we meet 0 cout up
+        // and when we meet 1, we calculate
+        for (; i < maps.size(); ++i) {
+            if (maps[i] == '0')
+                len_0++;
+            else {
+                ans += min(len_0 * b, a);
+                len_0 = 0;
             }
-        }
+        } 
         cout << ans << endl;
-        return 0;
     }
+    return 0;
 }
