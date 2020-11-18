@@ -1,33 +1,49 @@
 #include <iostream>
 #include <string>
+#include <cassert>
 
 using namespace::std;
-bool check(long long n) {
-    unsigned len = std::to_string(n).length();
-
-    int sign = (len % 2) ? 1 : 0;
-    while (n) {
-        if (n % 2 != sign) {
-            return false;
-        } else {
-            sign = sign ^ 0x1;
-            n /= 10;
-        }
-    }
-    return true;
-}
 
 int main() {
     int T; cin >> T;
-    for (int t = 0; t < T; ++t) {
-        long long L, R;
-        cin >> L >> R;
-        long long res = 0;
-        for (long long i = L; i <= R; ++i) {
-            if (check(i))
-                res++;
+    for (int t = 1; t <= T; ++t) {
+        long long L, R; cin >> L >> R; R++;
+        bool parity = 0;
+        long long coef = 1;
+        long long ans = 0;
+        while (L < R) {
+            auto is_good = [&](long long v) {
+                bool d = v % 2;
+                while (v > 0) {
+                    if (v % 2 != d) return false;
+                    d = !d;
+                    v /= 10;
+                }
+                return d == 0;
+            };
+            while (L < R && L % 10 != 0) {
+                if (is_good(L)) {
+                    ans += coef;
+                }
+                L++;
+            }
+            while (L < R && R % 10 != 0) {
+                --R;
+                if (is_good(R)) {
+                    ans += coef;
+                }
+            }
+
+            if (L == R) break;
+
+            L /= 10;
+            R /= 10;
+
+            coef *= 5;
+            parity = !parity;
         }
-        cout << "Case #" << t + 1 << ": " << res << endl;
+
+        cout << "Case #" << t << ": " << ans << endl;
     }
     return 0;
 }
