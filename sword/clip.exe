@@ -1,0 +1,14 @@
+// basic loop
+class Solution {
+public:
+    int hammingWeight(unit32_t n) {
+        int cnt = 0;
+        unit32_t flag = 1;
+        while (flag) {
+            if (n & flag)
+                cnt++;
+            flag <<= 1;
+        }
+        return cnt;
+    }
+};
