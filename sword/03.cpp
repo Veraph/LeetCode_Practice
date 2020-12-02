@@ -59,9 +59,42 @@ public:
 class Solution {
 public:
     int findRepeatNumber(vector<int> &nums) {
-              
+        // special case we return -1
+        if (nums.size() < 2) {
+            return -1;
+        }
+
+        // binary search
+        int start = 1;
+        int end = nums.size() - 1;
+        while (end >= start) {
+            // optimize to get the round up val
+            int mid = ((end - start) >> 1) + start;
+            int cnt = cntRange(nums, start, mid);
+            if (end == start) {
+                if (cnt > 1) {
+                    return start;
+                } else {
+                    break;
+                }
+            }
+
+            if (cnt > (mid - start + 1))
+                end = mid;
+            else
+                start = mid + 1;
+        }
+        return -1;
     }
 
+    int cntRange(vector<int> &nums, int start, int end) {
+        int cnt = 0;
+        for (int i = 0; i < nums.size(); ++i) {
+            if (nums[i] >= start && nums[i] <= end)
+                cnt++;
+        }
+        return cnt;
+    }
 };
 
 
