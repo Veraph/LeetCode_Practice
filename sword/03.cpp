@@ -65,7 +65,7 @@ public:
         }
 
         // binary search
-        int start = 1;
+        int start = 0;
         int end = nums.size() - 1;
         while (end >= start) {
             // optimize to get the round up val
@@ -100,9 +100,25 @@ public:
 
 // also can use two pointer 
 // to find the entry point of a loop
+// !!!NO!!!
+// This method can only deal with the situation when
+// the array of n + 1 length only have elements belongs to [1, n]
 class Solution {
 public:
     int findRepeatNumber(vector<int> &nums) {
+        if (nums.size() < 2)
+            return -1;
+        int slow = nums[0], fast = nums[nums[0]];
+        while (slow != fast) {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        }
 
+        fast = 0;
+        while (slow != fast) {
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+        return slow;
     }
 };
