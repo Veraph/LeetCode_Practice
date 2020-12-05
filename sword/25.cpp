@@ -1,39 +1,47 @@
+// recursion
+class Solution {
+public:
+    ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) {
+        if (!l1) return l2;
+        if (!l2) return l1;
+        
+        ListNode *ans = nullptr;
+
+        if (l1 -> val < l2 -> val) {
+            ans = l1;
+            ans -> next = mergeTwoLists(l1 -> next, l2);
+        } else {
+            ans = l2;
+            ans -> next = mergeTwoLists(l1, l2 -> next);
+        }
+        return ans;
+    }
+};
+
+// iterate
 class Solution {
 public:
     ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) {
         if (!l1) return l2;
         if (!l2) return l1;
 
-        ListNode origin = ListNode(0);
-        ListNode *res = &origin;
-        ListNode *ans = &origin;
-        while (l1 || l2) {
-            if (!l1) {
-                res = l2;
-                return ans -> next;
-            }
+        ListNode *ans = new ListNode(0);
+        ListNode *cur = ans;
 
-            if (!l2) {
-                res = l1;
-                return ans -> next;
-            }
-
-            if (cmp(l1, l2)) {
-                res = l1;
-                res -> next = nullptr;
-                res = res -> next;
+        while (l1 && l2) {
+            if (l1 -> val < l2 -> val) {
+                cur -> next = l1;
                 l1 = l1 -> next;
             } else {
-                res = l2;
-                res -> next = nullptr;
-                res = res -> next;
+                cur -> next = l2;
                 l2 = l2 -> next;
             }
+            cur = cur -> next;
         }
-        return ans -> next;
-    }
 
-    bool cmp(ListNode *l1, ListNode *l2) {
-        return (l1 -> val) <= (l2 -> val);
+        cur -> next = (!l1) ? l2 : l1;
+        cur = ans -> next;
+        delete ans;
+        return cur;
     }
 };
