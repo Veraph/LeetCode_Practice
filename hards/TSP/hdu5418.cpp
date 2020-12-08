@@ -4,52 +4,59 @@
 #include <climits>
 #include <algorithm>
 using namespace::std;
+const int INF = 0x3f3f3f3f;
 
-// initialize map
 const int maxN = 16;
 int map[maxN][maxN];
-//vector<vector<int>> map (maxN, vector<int> (maxN, INT_MAX));
-
-// initialize dp
-const int M = (1 << maxN);
-int dp[M][maxN];
-//vector<vector<int>> dp (maxN, vector<int> (M, INT_MAX));
+int dp[(1 << 16)][maxN];
 
 int main() {
-    memset(map, INT_MAX, sizeof(map));
-    memset(dp, INT_MAX, sizeof(dp));
     int T; cin >> T;
     while (T--) {
-        // for every test cases, there are n cities and m lines
-        int n, m; cin >> n >> m;
-        // read the costs
-        for (int i = 0; i < m; i++) {
-            int ui, vi, wi; cin >> ui >> vi >> wi;
-            map[ui - 1][vi - 1] = min(map[ui - 1][vi - 1], wi);
-        }
-        
-        // start dp
-        for (int m = 0; m < M; m++) {
-            // loop start point
-            for (int i = 0; i < n; i++)
-                // ensure the jth is in the set
-                if (m & (1 << i)) {
-                    // loop through current city
-                    for (int j = 0; j < n; j++) {
-                        if (!(m & (1 << j)) && (map[i][j] != INT_MAX))
-                            // the value in current city equals to the min
-                            // between the current one and the prev one plus the edge
-                            dp[j][m | (1 << j)] = min(dp[j][m | (1 << j)], dp[i][m] + map[i][j]); 
-                    }
-                }
+        memset(dp, INF, sizeof(dp));
+        memset(map, INF, sizeof(map));
+        int u, v, w, n, m;
+        cin >> n >> m;
+        // init the map matrix
+        for (int i = 0; i < m; ++i) {
+            cin >> u >> v >> w;
+            --u; --v;
+            map[u][v] = min(map[u][v], w);
+            map[v][u] = min(map[v][u], w);
         }
 
-        // add back the city
-        int ans = INT_MAX;
         for (int i = 0; i < n; i++) {
-            ans = min(ans, dp[M][i] + map[i][0]);
+            map[i][i] = 0;
         }
-        cout << ans << endl;
+
+        // use floyd to cal the distance
+        for (int k = 0; k < n; ++k) {
+            for (int i = 0; i < n; ++i) {
+                for (int j = 0; j < n; ++j) {
+                    map[i][j] = min(map[i][j], map[i][k] + map[k][j]);
+                }
+            }
+        }
+
+        // start case
+        dp[0][0] = 0;
+        // start dp
+        for (int i = 0; i < (1 << n); ++i) {
+            // loop every city as start point
+            for (int j = 0; j < n; ++j) {
+                if (dp[i][j] != INF) {
+                    // current point
+                    for (int k = 0; k < n; ++k) {
+                        dp[i | (1 << k)][k] = min(dp[i | (1 << k)][k], dp[i][j] + map[j][k]);
+                    }
+                }
+            }
+        }
+
+        cout << dp[(1 << n) - 1][0] << endl;
+
     }
     return 0;
 }
+                
+    
