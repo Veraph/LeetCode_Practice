@@ -24,3 +24,47 @@ public:
     }
 };
 
+// UnionFind
+class UnionFind {
+private:
+    vector<int> parent;
+public:
+
+    UnionFind(int x) {
+        parent.resize(x);
+        iota(parent.begin(), parent.end(), 0);
+    };
+
+    // unite operation
+    void unite(int x, int y) {
+        parent[find(x)] = find(parent[y]);
+    }
+
+    // find operation
+    int find(int x) {
+        if (x != parent[x]) {
+            parent[x] = find(parent[x]);   
+        }
+        return parent[x];
+    }
+
+    int retNum() {
+        return set(parent.begin(), parent.end()).size();
+    }
+};
+
+
+class Solution {
+public:
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int sz = isConnected.size();
+        UnionFind uf(sz);
+        
+        for (int i = 0; i < sz; i++) {
+            for (int j = i + 1; j < sz; j++) {
+                uf.unite(i, j);
+            }
+        }
+        return uf.retNum();
+    }
+};
