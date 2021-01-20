@@ -63,6 +63,12 @@ public:
     // but there do the opposite
     // why?
     void update(int pos, int val, int id) {
+        // have the same meaning with query
+        // with a certain point pos
+        // the pos satisfy the ypos - xpos > y - x condition
+        // when compared with all the point to the left of pos (follow the order of vector b)
+        // hence, we could update all x + y value with xpos + ypos if xpos + ypos is smaller
+        // to satisfy x1 + y1 - x - y is the minimal
         while (pos > 0) {
             if (tree[pos] > val) {
                 tree[pos] = val;
@@ -75,6 +81,11 @@ public:
     // the query function
     // from the pos element
     int query(int pos) {
+        // for a current pos
+        // all element in the tree which have idx bigger than pos
+        // have idRec[idx].y - idRec[idx].x > pos's (y - x)
+        // and we should find a minimal among all legal points
+        // to satisfy the minimal value of (yidx - y) + (xidx - x)
         int minVal = INT_MAX;
         int j = -1;
         while (pos < n) {
@@ -100,6 +111,7 @@ struct Edge {
 };
 
 struct Pos {
+    // pos record the id, x and y of a certain point.
     int id, x, y;
     bool operator < (const Pos& a) const { return x == a.x ? y < a.y : x < a.x; }
 };
@@ -171,6 +183,11 @@ public:
 
         vector<int> a(sz), b(sz);
         for (int i = 0; i < sz; i++) {
+            // the a[i] record the relative places between every node and the others
+            // a[i + 1] is on the p1 direction of a[i] only if a[i + 1] > a[i]
+            // we do not need to care about the points would be shown on p8 or p7
+            // as we already sort the pos with x from small to big
+            // hence every points after i would have bigger or equal x than i's
             a[i] = pos[i].y - pos[i].x;
             b[i] = pos[i].y - pos[i].x;
         }
@@ -185,9 +202,12 @@ public:
         for (int i = sz - 1; i >= 0; i--) {
             // why?
             // the lower_bound return an iterator point to the first val in the range that are not less than a[i]
-            // and the poss hence calculate the distance between the val and the begin of b
+            // which means the the point represented by poss is the point (x1, y1) which satisfy y1 - x1 >= y - x 
+            // and is the closet such point to original point (x, y)
             int poss = lower_bound(b.begin(), b.end(), a[i]) - b.begin() + 1;
             int j = bit.query(poss);
+            // the point j means the nearest p1 direction point to point i
+            // if j == -1 means there is no such point
             if (j != -1) {
                 int dis = abs(pos[i].x - pos[j].x) + abs(pos[i].y - pos[j].y);
                 edges.emplace_back(dis, pos[i].id, pos[j].id);
