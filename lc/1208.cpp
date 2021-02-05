@@ -30,14 +30,14 @@ public:
     // time O(nlogn), space o(n)
     int binarySearch(const vector<int>& acCost, int end, int target) {
         int left = 0, right = end;
-        while (left < end) {
+        while (left <= end) {
             // we should find the idx that >= than the target
             // which is the smallest left idx
             int mid = left + (right - left) / 2;
             if (acCost[mid] < target) {
                 left = mid + 1;
             } else {
-                right = mid;
+                right = mid - 1;
             }
         }
         return left;
